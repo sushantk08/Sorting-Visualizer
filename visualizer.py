@@ -1,6 +1,6 @@
 import tkinter as tk
 
-# Function to draw the array on the canvas with updated bar width and height
+
 def draw_data(data, canvas, colors):
     canvas.delete("all")
     canvas_width = 600
@@ -79,7 +79,7 @@ def merge_gen(data, left, mid, right, canvas):
         draw_data(data, canvas, ['orange' if left <= x <= right else 'lightblue' for x in range(len(data))])
         yield
 
-# Start sorting based on the selected algorithm
+
 def start_sorting():
     global sort_generator
     selected_algorithm = algo_menu.get()
@@ -90,14 +90,13 @@ def start_sorting():
     elif selected_algorithm == "Merge Sort":
         sort_generator = merge_sort_gen(data, canvas)
 
-# Perform the next sorting step
+
 def next_step():
     try:
         next(sort_generator)
     except StopIteration:
         pass
 
-# Reset the data based on user input
 def reset():
     global data, sort_generator
     user_input = input_entry.get()
@@ -108,50 +107,50 @@ def reset():
     except ValueError:
         error_label.config(text="Invalid input! Please enter comma-separated integers.")
 
-# Main program
+
 root = tk.Tk()
 root.title("Sorting Visualizer")
 root.geometry("700x500")
 
-# Canvas for drawing
+
 canvas = tk.Canvas(root, width=600, height=400, bg="white")
 canvas.grid(row=0, column=0, padx=10, pady=10)
 
-# Buttons and algorithm menu
+
 frame = tk.Frame(root)
 frame.grid(row=1, column=0, padx=10, pady=10)
 
-# Input field for the user to enter a list of elements
+
 input_label = tk.Label(frame, text="Enter comma-separated integers:")
 input_label.grid(row=0, column=0, padx=5)
 input_entry = tk.Entry(frame)
 input_entry.grid(row=0, column=1, padx=5)
 
-# Dropdown menu for selecting sorting algorithm
+
 algo_menu = tk.StringVar(root)
 algo_menu.set("Bubble Sort")  # Default algorithm
 dropdown = tk.OptionMenu(frame, algo_menu, "Bubble Sort", "Selection Sort", "Merge Sort")
 dropdown.grid(row=0, column=2, padx=10)
 
-# Start sorting button
+
 start_button = tk.Button(frame, text="Start Sorting", command=start_sorting)
 start_button.grid(row=0, column=3, padx=10)
 
-# Next step button
+
 next_button = tk.Button(frame, text="Next Step", command=next_step)
 next_button.grid(row=0, column=4, padx=10)
 
-# Reset button
+
 reset_button = tk.Button(frame, text="Reset", command=reset)
 reset_button.grid(row=0, column=5, padx=10)
 
-# Label to display errors
+
 error_label = tk.Label(frame, text="", fg="red")
 error_label.grid(row=1, columnspan=6)
 
-# Initialize the data
+
 data = []
 sort_generator = None
 
-# Start the Tkinter loop
+
 root.mainloop()
